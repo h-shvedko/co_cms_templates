@@ -7,6 +7,67 @@ use Mustache_Engine;
 use Mustache_Loader_CascadingLoader;
 use Mustache_Loader_FilesystemLoader;
 
+/**
+ * ---------------------------------------------------------------------------------------------------------------------
+ * For selecting some information from `map_files_to_templates` table with some "complex" SQL query
+ * $mapsFilesToTemplate = new MapFilesToTemplates();
+ * $query = sprintf('SELECT m.id_file as fileId, f.identifier as identifier, m.id_template as templateId, t.identifier as template_name, f.is_base_css as is_base_css, f.mime as mime
+ * FROM map_files_to_templates m
+ * WHERE t.site_structure_id=%d ', $this->getProjectId(), "0", "0", "0", $this->getProjectId());
+ * try {
+ * $data = $mapsFilesToTemplate->repository()->findAllByQuery($query);
+ * } catch (Exception $e) {
+ * error handling here
+ * }
+ *
+ * ---------------------------------------------------------------------------------------------------------------------
+ * For selecting one row from `map_files_to_templates` by few parameters
+ * $mapFilesEntity = new MapFilesToTemplates();
+ * try {
+ * $mapFilesToTemplate = $mapFilesEntity->repository()->findOneBy(['id_file' => $id, 'id_template' => $id_template', 'livesite' => "0"]);
+ * //$mapFilesToTemplate - is an associative array
+ * } catch (Exception $e) {
+ * error handling here
+ * }
+ *
+ * ---------------------------------------------------------------------------------------------------------------------
+ * For selecting all rows from `templates` by few parameters
+ * $templateEntity = new Templates();
+ * try {
+ * $templatesData = $templateEntity->repository()->findAllBy(['site_structure_id' => $this->getProjectId(), 'livesite' => "0"]);
+ * } catch (Exception $e) {
+ * error handling here
+ * }*
+ *
+ * ---------------------------------------------------------------------------------------------------------------------
+ * Insert one record into table `map_files_to_templates` with returning id of newly created record
+ * $mapFilesEntity = new MapFilesToTemplates();
+ * try {
+ * $mapFileToTemplateId = $mapFilesEntity->repository()->insertOne(['id_file' => $this->newFileId, 'id_template' => '',
+ * 'type' => '', 'livesite' => "0", 'sorter' => ']);
+ * } catch (Exception $e) {
+ * error handling here
+ * }*
+ *
+ * ---------------------------------------------------------------------------------------------------------------------
+ * Update one record in table `map_files_to_templates`
+ * $mapFilesEntity = new MapFilesToTemplates();
+ *  try {
+ * $mapFilesEntity->repository()->updateOneBy(['id_file' => $this->fileId, 'id_template' => '', 'livesite' => "0"],
+ * ['type' => '']);
+ * } catch (Exception $e) {
+ * error handling here
+ * }
+ *
+ * ---------------------------------------------------------------------------------------------------------------------
+ * Remove all records from `map_files_to_templates` table by $id
+ * try {
+ * $mapFilesToTemplates = new MapFilesToTemplates();
+ * $mapFilesToTemplates->repository()->deleteAllBy(['id_file' => $id]);
+ * } catch (AExceptions $exception) {
+ * error handling
+ * }
+ */
 class TemplatesController
 {
 
